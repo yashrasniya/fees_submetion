@@ -7,7 +7,8 @@ class batch(models.Model):
     batch_list = [(f"{a}-{a + 4}", f"{a}-{a + 4}") for a in range(2014, 1 + int(str(datetime.now()).split("-")[0]))]
 
     batch_name = models.CharField(max_length=200, choices=batch_list, null=True, blank=True)
-
+    def __str__(self):
+        return self.batch_name
 
 class branch(models.Model):
     branch_list = [
@@ -18,7 +19,8 @@ class branch(models.Model):
         ('Civil Engineering', 'Civil Engineering')
     ]
     branch_name = models.CharField(max_length=200, choices=branch_list, null=True, blank=True)
-
+    def __str__(self):
+        return self.branch_name
 class semester(models.Model):
     semester_list = [(f'{i} semester',f'{i} semester') for i in range(1,9)]
     branch=models.ForeignKey(branch,on_delete=models.CASCADE)
@@ -33,3 +35,5 @@ class semester(models.Model):
     SportFee = models.IntegerField(null=False)
     DevelopmentFee = models.IntegerField(null=False)
     WelfareFee = models.IntegerField(null=False)
+    def __str__(self):
+        return self.semester_name

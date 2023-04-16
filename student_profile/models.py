@@ -50,12 +50,31 @@ class UserManager(BaseUserManager):
 
 class Student(AbstractUser):
     father_name = models.CharField(max_length=20, null=False)
+    mother_name = models.CharField(max_length=20, null=False)
+    birt_date = models.DateField(null=False)
+    category = models.CharField(choices=(
+        ('GEN', 'GEN'),
+        ('SC', 'SC'),
+        ('ST', 'ST'),
+        ('OBC', 'OBC'),
+    ), default='',max_length=40)
+    gender = models.CharField(choices=(
+        ('M', 'M'),
+        ('F', 'F'),
+        ('T', 'T')
+    ), default='',max_length=40)
+    fess_method = models.CharField(choices=(
+        ('M', 'M'),
+        ('F', 'F'),
+        ('T', 'T')
+    ), default='', max_length=40)
     batch = models.ForeignKey('divisions.batch', on_delete=models.CASCADE, null=True)
     branch = models.ForeignKey('divisions.branch', on_delete=models.CASCADE, null=True)
 
     mobile_number = models.IntegerField(null=False, unique=True)
     username = models.CharField(max_length=50, null=False)
     roll_number = models.IntegerField(null=False, primary_key=True)
+
     USERNAME_FIELD = 'mobile_number'
     objects = UserManager()
 
@@ -64,8 +83,6 @@ class Student(AbstractUser):
 
     def branch_name(self):
         return self.branch.branch_name
-
-
 
     def __str__(self):
         return str(self.mobile_number)
